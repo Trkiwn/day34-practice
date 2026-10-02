@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>After-Lecture Practice — Writing Task 1: Data Tables</title>
+<style>
+  :root {
+    --navy: #1A2A4A;
+    --blue: #0275D8;
+    --purple: #8E44AD;
+    --amber: #D97706;
+    --green: #5CB85C;
+    --red: #D9534F;
+    --bg: #F4F6F9;
+    --card: #FFFFFF;
+    --border: #E1E6ED;
+    --text: #24303F;
+    --muted: #64748B;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    margin: 0;
+    padding: 0 0 60px 0;
+    line-height: 1.55;
+  }
+  header {
+    background: linear-gradient(135deg, var(--navy), #2b3f6b);
+    color: white;
+    padding: 28px 20px 22px;
+    text-align: center;
+  }
+  header h1 { margin: 0 0 6px; font-size: 1.5rem; }
+  header p { margin: 0; opacity: 0.85; font-size: 0.95rem; }
+
+  .container { max-width: 880px; margin: 0 auto; padding: 0 18px; }
+
+  .timebar {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 18px;
+    font-size: 0.82rem;
+  }
+  .timebar span {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 5px 12px;
+    color: var(--muted);
+  }
+  .timebar span strong { color: var(--navy); }
+
+  .section {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin-top: 24px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(20,30,60,0.05);
+  }
+  .section-head {
+    padding: 14px 20px;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  .section-head-left { display: flex; align-items: center; gap: 10px; }
+  .section-head .tag {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    background: rgba(255,255,255,0.22);
+    padding: 3px 9px;
+    border-radius: 20px;
+    font-weight: 700;
+  }
+  .section-head .time-tag {
+    font-size: 0.72rem;
+    background: rgba(255,255,255,0.14);
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-weight: 600;
+  }
+  .section-head h2 { margin: 0; font-size: 1.08rem; }
+  .basic .section-head { background: var(--blue); }
+  .intermediate .section-head { background: var(--purple); }
+  .advanced .section-head { background: var(--amber); }
+  .application .section-head { background: var(--navy); }
+
+  .section-body { padding: 18px 20px 22px; }
+  .instructions { font-style: italic; color: var(--muted); margin-bottom: 16px; font-size: 0.92rem; }
+
+  .q-item { margin-bottom: 18px; }
+  .q-item .q-num { font-weight: 700; color: var(--navy); margin-right: 6px; }
+  .q-type {
+    display: inline-block;
+    font-size: 0.66rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 700;
+    color: white;
+    background: var(--muted);
+    padding: 2px 8px;
+    border-radius: 10px;
+    margin-left: 8px;
+    vertical-align: middle;
+  }
+  .q-type.mcq { background: var(--blue); }
+  .q-type.tf { background: var(--red); }
+  .q-type.fix { background: #B45309; }
+  .q-type.write { background: var(--green); }
+  .q-type.check { background: var(--amber); }
+
+  .choice-group { display: flex; flex-direction: column; gap: 6px; margin-top: 8px; }
+  .choice-group label {
+    font-weight: 400;
+    cursor: pointer;
+    background: #F7F9FC;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+  }
+  .choice-group label:hover { border-color: var(--blue); }
+  .choice-group input { margin-right: 8px; }
+
+  select {
+    padding: 7px 10px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-family: inherit;
+    background: white;
+  }
+
+  textarea, input[type=text] {
+    width: 100%;
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    padding: 10px 12px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    resize: vertical;
+    background: #FCFCFD;
+  }
+  textarea:focus, input:focus, select:focus { outline: 2px solid var(--blue); outline-offset: 1px; background: white; }
+
+  .task-block {
+    background: #F7F9FC;
+    border-left: 4px solid var(--purple);
+    border-radius: 4px;
+    padding: 10px 14px;
+    margin-bottom: 14px;
+    font-size: 0.92rem;
+  }
+  .task-block.prompt { border-left-color: var(--navy); }
+
+  .translation-item { margin: 0 0 14px 0; }
+  .translation-item:last-child { margin-bottom: 0; }
+
+  .checklist { margin-top: 14px; font-size: 0.9rem; }
+  .checklist label { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 8px; cursor: pointer; }
+  .checklist input { margin-top: 3px; }
+
+  .word-count { font-size: 0.78rem; color: var(--muted); text-align: right; margin-top: 4px; }
+  .inline-fix { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 8px; }
+  .inline-fix input[type=text] { flex: 1; min-width: 220px; }
+
+  .data-table { width: 100%; border-collapse: collapse; margin-bottom: 14px; font-size: 0.88rem; }
+  .data-table th, .data-table td { border: 1px solid var(--border); padding: 7px 10px; text-align: center; }
+  .data-table th { background: var(--navy); color: white; font-size: 0.78rem; }
+  .data-table td:first-child, .data-table th:first-child { text-align: left; font-weight: 600; }
+
+  .submit-panel {
+    background: var(--navy);
+    color: white;
+    border-radius: 10px;
+    margin-top: 30px;
+    padding: 24px 22px;
+  }
+  .submit-panel h2 { margin: 0 0 6px; font-size: 1.2rem; }
+  .submit-panel p { margin: 0 0 16px; opacity: 0.85; font-size: 0.92rem; }
+  .btn-row { display: flex; gap: 12px; flex-wrap: wrap; }
+  .btn {
+    border: none;
+    padding: 12px 18px;
+    border-radius: 8px;
+    font-size: 0.92rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: transform 0.1s ease, opacity 0.2s ease;
+  }
+  .btn:active { transform: scale(0.97); }
+  .btn-primary { background: var(--amber); color: white; }
+  .btn-secondary { background: rgba(255,255,255,0.14); color: white; border: 1px solid rgba(255,255,255,0.3); }
+  .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .status-msg {
+    margin-top: 14px;
+    font-size: 0.88rem;
+    padding: 10px 14px;
+    border-radius: 7px;
+    display: none;
+  }
+  .status-msg.show { display: block; }
+  .status-ok { background: rgba(92,184,92,0.18); border: 1px solid rgba(92,184,92,0.4); }
+  .status-warn { background: rgba(217,83,79,0.18); border: 1px solid rgba(217,83,79,0.4); }
+
+  .preview-box {
+    margin-top: 18px;
+    background: rgba(0,0,0,0.25);
+    border-radius: 8px;
+    padding: 14px;
+    max-height: 260px;
+    overflow-y: auto;
+    display: none;
+  }
+  .preview-box.show { display: block; }
+  .preview-box pre {
+    white-space: pre-wrap;
+    word-break: break-word;
+    margin: 0;
+    font-family: 'Consolas', monospace;
+    font-size: 0.8rem;
+    color: #E8EDF5;
+  }
+
+  footer {
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.8rem;
+    margin-top: 34px;
+    padding: 0 20px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Writing Task 1: Data Tables</h1>
+  <p>Week 18, Day 34 — After-Lecture Practice</p>
+</header>
+
+<div class="container">
+
+  <div class="timebar">
+    <span>🔵 Basic <strong>~12 min</strong></span>
+    <span>🟣 Intermediate <strong>~24 min</strong></span>
+    <span>🟠 Advanced <strong>~16 min</strong></span>
+    <span>🔷 Application <strong>~12 min</strong></span>
+  </div>
+
+  <!-- ============ BASIC ============ -->
+  <div class="section basic">
+    <div class="section-head"><div class="section-head-left"><span class="tag">Basic</span><h2>Recognizing the Rules</h2></div><span class="time-tag">~12 min</span></div>
+    <div class="section-body">
+      <p class="instructions">Five quick checks on today's core rules before you work with a full table.</p>
+
+      <div class="q-item">
+        <span class="q-num">1.</span>In a Task 1 overview, specific numbers should...<span class="q-type mcq">Multiple Choice</span>
+        <div class="choice-group">
+          <label><input type="radio" name="b1" value="A"> A. Always appear, to prove your claims</label>
+          <label><input type="radio" name="b1" value="B"> B. Never appear -- they belong in the body paragraphs</label>
+          <label><input type="radio" name="b1" value="C"> C. Appear only for the single highest figure</label>
+        </div>
+      </div>
+
+      <div class="q-item">
+        <span class="q-num">2.</span>A table shows: "Three countries have literacy rates above 95%, while two countries have rates below 60%." Which grouping strategy fits best?<span class="q-type mcq">Multiple Choice</span>
+        <div class="choice-group">
+          <label><input type="radio" name="b2" value="A"> A. Strategy A -- group by shared row characteristic</label>
+          <label><input type="radio" name="b2" value="B"> B. Strategy B -- group by category/column</label>
+        </div>
+      </div>
+
+      <div class="q-item">
+        <span class="q-num">3.</span>"Band 9 model answers typically mention every single number in the table."<span class="q-type tf">True / False</span>
+        <div class="choice-group">
+          <label><input type="radio" name="b3" value="True"> True</label>
+          <label><input type="radio" name="b3" value="False"> False</label>
+        </div>
+      </div>
+
+      <div class="q-item">
+        <span class="q-num">4.</span>Which sentence could correctly open an overview?<span class="q-type mcq">Multiple Choice</span>
+        <div class="choice-group">
+          <label><input type="radio" name="b4" value="A"> A. "It is clear that..."</label>
+          <label><input type="radio" name="b4" value="B"> B. "The table shows 45%, 32%, and 12%..."</label>
+          <label><input type="radio" name="b4" value="C"> C. "Let me describe the numbers one by one..."</label>
+        </div>
+      </div>
+
+      <div class="q-item">
+        <span class="q-num">5.</span>Which of these two sentences breaks the overview rule?<span class="q-type mcq">Spot the Violation</span>
+        <div class="choice-group">
+          <label><input type="radio" name="b5" value="A"> A. "It is clear that spending on food was highest in every country."</label>
+          <label><input type="radio" name="b5" value="B"> B. "It is clear that spending on food, at 32%, was highest in every country."</label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ INTERMEDIATE ============ -->
+  <div class="section intermediate">
+    <div class="section-head"><div class="section-head-left"><span class="tag">Intermediate</span><h2>Fix, Translate, and Construct</h2></div><span class="time-tag">~24 min</span></div>
+    <div class="section-body">
+      <p class="instructions">Diagnose real overview and body-paragraph problems, translate the connector phrases, then build your own overview and check a number count.</p>
+
+      <div class="q-item">
+        <span class="q-num">1.</span>This overview breaks a rule from today's lecture. Find the error, then rewrite it correctly.<span class="q-type fix">Error Correction</span>
+        <div class="task-block">"It is clear that 85% of students in Hanoi spent money on food, while only 28% did so in Can Tho."</div>
+        <div class="inline-fix">
+          <input type="text" id="i1-error" placeholder="What is the error?">
+          <input type="text" id="i1-fix" placeholder="Your corrected overview">
+        </div>
+      </div>
+
+      <div class="q-item">
+        <span class="q-num">2.</span>This body paragraph has a different problem. Find it, then rewrite a shorter, grouped version.<span class="q-type fix">Error Correction</span>
+        <div class="task-block">"In Hanoi, students spent 40 dollars on food. In Da Nang, students spent 30 dollars on food. In Can Tho, students spent 28 dollars on food. In Hanoi, students spent 15 dollars on transport. In Da Nang, students spent 10 dollars on transport."</div>
+        <div class="inline-fix">
+          <input type="text" id="i2-error" placeholder="What is the error?">
+        </div>
+        <textarea id="i2-fix" rows="2" placeholder="Write your shorter, grouped version here..." style="margin-top:8px;"></textarea>
+      </div>
+
+      <div class="q-item">
+        <span class="q-num">3.</span>Translate each sentence into English, using the target phrase given in brackets.<span class="q-type write">Translation</span>
+        <div class="task-block">
+          <p class="translation-item"><strong>1.</strong> Rõ ràng là phần lớn người tiêu dùng chi tiêu nhiều nhất cho thực phẩm. <em>(It is clear that)</em><textarea id="i3-1" rows="2" placeholder="Your translation"></textarea></p>
+          <p class="translation-item"><strong>2.</strong> Ngược lại, danh mục giải trí có tỷ lệ phần trăm thấp nhất. <em>(In contrast)</em><textarea id="i3-2" rows="2" placeholder="Your translation"></textarea></p>
+          <p class="translation-item"><strong>3.</strong> Nhìn chung, có thể thấy rằng chi tiêu đã tăng ở cả năm quốc gia. <em>(Overall, it can be seen that)</em><textarea id="i3-3" rows="2" placeholder="Your translation"></textarea></p>
+          <p class="translation-item"><strong>4.</strong> So với Hà Nội, Cần Thơ dành tỷ lệ phần trăm thu nhập cao hơn cho tiết kiệm. <em>(Compared to)</em><textarea id="i3-4" rows="2" placeholder="Your translation"></textarea></p>
+        </div>
+      </div>
+
+      <div class="q-item">
+        <span class="q-num">4.</span>Read the table, choose a grouping strategy, and write a 2-sentence overview (no numbers allowed).<span class="q-type write">Overview Writing</span>
+        <table class="data-table">
+          <tr><th>Region</th><th>Internet Access, 2015</th><th>Internet Access, 2023</th></tr>
+          <tr><td>Red River Delta</td><td>45%</td><td>92%</td></tr>
+          <tr><td>Mekong Delta</td><td>30%</td><td>85%</td></tr>
+          <tr><td>Central Highlands</td><td>15%</td><td>60%</td></tr>
+          <tr><td>Northern Mountains</td><td>10%</td><td>55%</td></tr>
+        </table>
+        Strategy chosen: <select id="i4-strategy"><option value="">-- choose --</option><option>Strategy A (row grouping)</option><option>Strategy B (category grouping)</option><option>Describe the overall trend over time</option></select>
+        <textarea id="i4-overview" rows="2" placeholder="Write your 2-sentence overview here..." style="margin-top:8px;"></textarea>
+      </div>
+
+      <div class="q-item">
+        <span class="q-num">5.</span>Count the numbers in this body paragraph. Does it follow the 6-7 number rule? If not, say what you would cut.<span class="q-type tf">Number Audit</span>
+        <div class="task-block">"In Hanoi, students spent 40 dollars on food, 15 dollars on transport, 20 dollars on entertainment, and 10 dollars on savings. In Da Nang, they spent 30 dollars on food, 10 dollars on transport, 15 dollars on entertainment, and 20 dollars on savings. In Can Tho, the figures were 28, 8, 12, and 25 dollars respectively."</div>
+        <input type="text" id="i5-count" placeholder="How many numbers did you count?" style="margin-bottom:8px;">
+        <input type="text" id="i5-fix" placeholder="What would you cut or group differently?">
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ ADVANCED ============ -->
+  <div class="section advanced">
+    <div class="section-head"><div class="section-head-left"><span class="tag">Advanced</span><h2>Diagnose, Build &amp; Judge</h2></div><span class="time-tag">~16 min</span></div>
+    <div class="section-body">
+      <p class="instructions">These items stack more than one issue at once, or ask you to judge quality directly.</p>
+
+      <div class="q-item">
+        <span class="q-num">1.</span>This report has more than one problem. Check every box that applies, then rewrite the overview and body paragraph.<span class="q-type check">Multi-Select + Fix</span>
+        <div class="task-block">"The table shows spending by students in three cities. It is clear that Hanoi students spent 40 dollars on food, which was more than Da Nang's 30 dollars and Can Tho's 28 dollars. In Hanoi, students also spent 15 dollars on transport, 20 on entertainment, and 10 on savings. In Da Nang, they spent 10, 15, and 20 respectively. In Can Tho, the amounts were 8, 12, and 25."</div>
+        <div class="checklist">
+          <label><input type="checkbox" id="a1-c1"> The overview contains specific numbers, which should be saved for the body paragraphs.</label>
+          <label><input type="checkbox" id="a1-c2"> The body paragraph describes every row mechanically, city by city, with no real grouping or comparison language.</label>
+          <label><input type="checkbox" id="a1-c3"> There is no problem -- this report is ready to use.</label>
+        </div>
+        <textarea id="a1-fix" rows="4" placeholder="Write your corrected overview and body paragraph here..." style="margin-top:10px;"></textarea>
+      </div>
+
+      <div class="q-item">
+        <span class="q-num">2.</span>Write a full overview, choose a grouping strategy, and write ONE grouped body paragraph using no more than 7 numbers.<span class="q-type write">Full Task</span>
+        <table class="data-table">
+          <tr><th>City</th><th>Food</th><th>Transport</th><th>Entertainment</th><th>Savings</th></tr>
+          <tr><td>Hanoi</td><td>$40</td><td>$15</td><td>$20</td><td>$10</td></tr>
+          <tr><td>Da Nang</td><td>$30</td><td>$10</td><td>$15</td><td>$20</td></tr>
+          <tr><td>Can Tho</td><td>$28</td><td>$8</td><td>$12</td><td>$25</td></tr>
+        </table>
+        <div class="task-block">Average weekly spending (USD) on various categories by university students in three cities.</div>
+        <textarea id="a2-overview" rows="2" placeholder="Your 2-sentence overview (no numbers)..."></textarea>
+        <textarea id="a2-body" rows="4" placeholder="Your grouped body paragraph (max 7 numbers)..." style="margin-top:8px;"></textarea>
+      </div>
+
+      <div class="q-item">
+        <span class="q-num">3.</span>Which overview below is stronger? Name the specific mistake the weaker one makes.<span class="q-type write">Judge + Justify</span>
+        <div class="task-block"><strong>Overview X:</strong> "It is clear that younger people favor active and digital pastimes, whereas older people prefer calmer, more traditional activities. Overall, participation in social media and sport decreases with age, while interest in reading and gardening increases."</div>
+        <div class="task-block"><strong>Overview Y:</strong> "The three age groups have different participation rates in various leisure activities, with some higher and some lower than others."</div>
+        <input type="text" id="a3-answer" placeholder="Which is stronger, and what mistake does the other one make?">
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ APPLICATION ============ -->
+  <div class="section application">
+    <div class="section-head"><div class="section-head-left"><span class="tag">Application</span><h2>Full Task: Complete Report</h2></div><span class="time-tag">~12 min</span></div>
+    <div class="section-body">
+
+      <table class="data-table">
+        <tr><th>Activity</th><th>Age 18-30</th><th>Age 31-50</th><th>Age 51+</th></tr>
+        <tr><td>Sports</td><td>55%</td><td>35%</td><td>15%</td></tr>
+        <tr><td>Reading</td><td>20%</td><td>35%</td><td>45%</td></tr>
+        <tr><td>Social Media</td><td>80%</td><td>50%</td><td>20%</td></tr>
+        <tr><td>Gardening</td><td>5%</td><td>20%</td><td>55%</td></tr>
+      </table>
+      <div class="task-block prompt">The table shows participation rates (%) in different leisure activities among three age groups in a national survey.</div>
+
+      <div class="q-item">
+        <span class="q-num">1.</span>Write your full Introduction + Overview.<span class="q-type write">Introduction + Overview</span>
+        <textarea id="app1" rows="3" placeholder="Write your paraphrased introduction and 2-sentence overview here (no numbers in the overview)..." oninput="updateWordCount('app1','app1-count')"></textarea>
+        <div class="word-count" id="app1-count">0 words</div>
+      </div>
+
+      <div class="q-item">
+        <span class="q-num">2.</span>Write your two body paragraphs, grouped sensibly, using no more than 7 numbers in total.<span class="q-type write">Body Paragraphs</span>
+        <textarea id="app2" rows="6" placeholder="Write your two grouped body paragraphs here..." oninput="updateWordCount('app2','app2-count')"></textarea>
+        <div class="word-count" id="app2-count">0 words</div>
+      </div>
+
+      <div class="checklist">
+        <label><input type="checkbox"> The overview has exactly 2 sentences and contains zero specific numbers</label>
+        <label><input type="checkbox"> A grouping strategy was chosen deliberately, not row-by-row in the table's original order</label>
+        <label><input type="checkbox"> The whole report uses 7 numbers or fewer</label>
+        <label><input type="checkbox"> Comparison language connects the numbers, rather than listing isolated facts</label>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ SUBMISSION ============ -->
+  <div class="submit-panel">
+    <h2>Send Your Answers to Your Teacher</h2>
+    <p>Click "Prepare Submission" to review everything below, then choose how to send it — by email, by copying the text, or by downloading it as a file to attach.</p>
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="prepareSubmission()">📝 Prepare Submission</button>
+      <button class="btn btn-secondary" id="emailBtn" onclick="sendByEmail()" disabled>✉️ Open in Email App</button>
+      <button class="btn btn-secondary" id="copyBtn" onclick="copyToClipboard()" disabled>📋 Copy to Clipboard</button>
+      <button class="btn btn-secondary" id="downloadBtn" onclick="downloadAsFile()" disabled>⬇️ Download as .txt</button>
+    </div>
+    <div class="status-msg" id="statusMsg"></div>
+    <div class="preview-box" id="previewBox"><pre id="previewText"></pre></div>
+  </div>
+
+  <footer>
+    Teacher's email: kien.nguyen2411@outlook.com — if the email button doesn't open your mail app, use Copy or Download instead and send it manually.
+  </footer>
+</div>
+
+<script>
+function updateWordCount(taId, countId) {
+  const text = document.getElementById(taId).value.trim();
+  const words = text.length ? text.split(/\s+/).length : 0;
+  document.getElementById(countId).textContent = words + ' word' + (words === 1 ? '' : 's');
+}
+
+function radioVal(name) {
+  const el = document.querySelector('input[name="' + name + '"]:checked');
+  return el ? el.value : '(not answered)';
+}
+function val(id) {
+  const el = document.getElementById(id);
+  const v = el.value.trim();
+  return v.length ? v : '(not answered)';
+}
+function boxVal(id) {
+  const el = document.getElementById(id);
+  return el && el.checked ? '✔ checked' : '☐ not checked';
+}
+function checkVal(idx) {
+  const boxes = document.querySelectorAll('.checklist input[type=checkbox]');
+  return boxes[idx] && boxes[idx].checked ? '✔ checked' : '☐ not checked';
+}
+
+function buildSubmissionText() {
+  let out = '';
+  out += 'WRITING TASK 1: DATA TABLES (Week 18, Day 34 — After-Lecture Practice)\n';
+  out += '========================================================\n\n';
+
+  out += '--- BASIC: Recognizing the Rules ---\n';
+  out += '1. Numbers in overview: ' + radioVal('b1') + '\n';
+  out += '2. Grouping strategy for literacy example: ' + radioVal('b2') + '\n';
+  out += '3. (True/False) Mentions every number: ' + radioVal('b3') + '\n';
+  out += '4. Correct overview opener: ' + radioVal('b4') + '\n';
+  out += '5. Which sentence breaks the rule: ' + radioVal('b5') + '\n\n';
+
+  out += '--- INTERMEDIATE: Fix, Translate, and Construct ---\n';
+  out += '1. Error found: ' + val('i1-error') + '\n   Corrected: ' + val('i1-fix') + '\n';
+  out += '2. Error found: ' + val('i2-error') + '\n   Grouped version: ' + val('i2-fix') + '\n';
+  out += '3. Translation exercise:\n';
+  out += '   1. ' + val('i3-1') + '\n';
+  out += '   2. ' + val('i3-2') + '\n';
+  out += '   3. ' + val('i3-3') + '\n';
+  out += '   4. ' + val('i3-4') + '\n';
+  out += '4. Internet access table -- Strategy: ' + val('i4-strategy') + '\n   Overview: ' + val('i4-overview') + '\n';
+  out += '5. Number count: ' + val('i5-count') + '  |  What to cut: ' + val('i5-fix') + '\n\n';
+
+  out += '--- ADVANCED: Diagnose, Build & Judge ---\n';
+  out += '1. Problems identified:\n';
+  out += '   ' + boxVal('a1-c1') + ' — numbers in overview\n';
+  out += '   ' + boxVal('a1-c2') + ' — shopping-list body paragraph\n';
+  out += '   ' + boxVal('a1-c3') + ' — "no problem" (distractor option)\n';
+  out += '   Rewrite: ' + val('a1-fix') + '\n';
+  out += '2. Student spending table -- Overview: ' + val('a2-overview') + '\n   Body: ' + val('a2-body') + '\n';
+  out += '3. Overview judge: ' + val('a3-answer') + '\n\n';
+
+  out += '--- APPLICATION: Full Task (leisure activities by age) ---\n';
+  out += 'Introduction + Overview:\n' + val('app1') + '\n\n';
+  out += 'Body Paragraphs:\n' + val('app2') + '\n\n';
+  out += 'Self-check:\n';
+  out += '  ' + checkVal(0) + ' — overview is 2 sentences, zero numbers\n';
+  out += '  ' + checkVal(1) + ' — deliberate grouping strategy used\n';
+  out += '  ' + checkVal(2) + ' — 7 numbers or fewer total\n';
+  out += '  ' + checkVal(3) + ' — comparison language used throughout\n';
+
+  return out;
+}
+
+let currentSubmission = '';
+
+function prepareSubmission() {
+  const statusEl = document.getElementById('statusMsg');
+  currentSubmission = buildSubmissionText();
+  document.getElementById('previewText').textContent = currentSubmission;
+  document.getElementById('previewBox').classList.add('show');
+  statusEl.textContent = '✓ Submission ready below. Choose how to send it.';
+  statusEl.className = 'status-msg show status-ok';
+  document.getElementById('emailBtn').disabled = false;
+  document.getElementById('copyBtn').disabled = false;
+  document.getElementById('downloadBtn').disabled = false;
+}
+
+function sendByEmail() {
+  const subject = encodeURIComponent('Week 18 Day 34 Data Tables Practice');
+  const body = encodeURIComponent(currentSubmission);
+  window.location.href = 'mailto:kien.nguyen2411@outlook.com?subject=' + subject + '&body=' + body;
+}
+
+function copyToClipboard() {
+  navigator.clipboard.writeText(currentSubmission).then(() => {
+    const statusEl = document.getElementById('statusMsg');
+    statusEl.textContent = '✓ Copied to clipboard! You can now paste it into an email or message.';
+    statusEl.className = 'status-msg show status-ok';
+  }).catch(() => {
+    const statusEl = document.getElementById('statusMsg');
+    statusEl.textContent = '⚠ Could not copy automatically — please select the text in the box above and copy it manually.';
+    statusEl.className = 'status-msg show status-warn';
+  });
+}
+
+function downloadAsFile() {
+  const blob = new Blob([currentSubmission], { type: 'text/plain' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'Week18_Day34_DataTables_Practice.txt';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+</script>
+
+</body>
+</html>
